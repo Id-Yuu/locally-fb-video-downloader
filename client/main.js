@@ -1,4 +1,3 @@
-// DOM Elements
 const step1 = document.getElementById('step1');
 const step2 = document.getElementById('step2');
 const urlInput = document.getElementById('urlInput');
@@ -12,7 +11,6 @@ const statusText = document.getElementById('statusText');
 
 let currentUrl = '';
 
-// --- STEP 1: FETCH METADATA ---
 getInfoBtn.addEventListener('click', async () => {
     const url = urlInput.value.trim();
     if (!url) return setStatus('⚠️ Please enter a URL', 'red');
@@ -36,11 +34,9 @@ getInfoBtn.addEventListener('click', async () => {
 
         if (data.error) throw new Error(data.error);
 
-        // Populate UI
         videoTitle.innerText = data.title.length > 50 ? data.title.substring(0, 50) + '...' : data.title;
         thumb.src = data.thumbnail;
         
-        // Populate Resolutions
         qualitySelect.innerHTML = '';
         if (data.qualities && data.qualities.length) {
             data.qualities.forEach(q => {
@@ -56,7 +52,6 @@ getInfoBtn.addEventListener('click', async () => {
             qualitySelect.appendChild(opt);
         }
 
-        // Switch Screen
         step1.classList.add('hidden');
         step2.classList.remove('hidden');
         setStatus('');
@@ -68,16 +63,13 @@ getInfoBtn.addEventListener('click', async () => {
     }
 });
 
-// --- STEP 2: DOWNLOAD FILE ---
+
 downloadBtn.addEventListener('click', () => {
     const quality = qualitySelect.value;
-    
     setStatus('⏳ Processing... Please wait.', '#1877f2');
     downloadBtn.disabled = true;
     downloadBtn.innerText = "Processing on Server...";
 
-    // Trigger Download via hidden iframe
-    // This allows the browser to handle the file save dialog naturally
     const downloadUrl = `/download?url=${encodeURIComponent(currentUrl)}&quality=${quality}`;
     
     const iframe = document.createElement('iframe');
@@ -85,19 +77,15 @@ downloadBtn.addEventListener('click', () => {
     iframe.src = downloadUrl;
     document.body.appendChild(iframe);
 
-    // Reset UI logic after a delay
-    // We can't detect exactly when a file download starts via iframe, so we guess.
     setTimeout(() => {
         setStatus('✅ Download started! Check your downloads folder.', 'green');
         downloadBtn.disabled = false;
         downloadBtn.innerText = "Download MP4";
         
-        // Cleanup iframe
         setTimeout(() => document.body.removeChild(iframe), 60000);
     }, 4000);
 });
 
-// --- RESET ---
 backBtn.addEventListener('click', () => {
     step2.classList.add('hidden');
     step1.classList.remove('hidden');
@@ -105,7 +93,7 @@ backBtn.addEventListener('click', () => {
     urlInput.value = '';
 });
 
-// Helper
+
 function setStatus(msg, color) {
     statusText.innerHTML = msg;
     statusText.style.color = color || 'black';
