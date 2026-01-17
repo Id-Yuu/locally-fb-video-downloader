@@ -38,7 +38,7 @@ You need to download two executable files and place them in the `server/bin/` fo
 Ensure your directory structure looks **exactly** like this:
 
 ```text
-fb-downloader/
+locally-fb-video-downloader/
 └── server/
     └── bin/
         ├── yt-dlp.exe    <-- Required
@@ -118,7 +118,7 @@ npm run dev
 ## 📂 Project Structure
 
 ```text
-fb-downloader/
+locally-fb-video-downloader/
 ├── client/                 # Frontend (Vite + Vanilla JS)
 │   ├── index.html          # Main HTML entry
 │   ├── main.js             # UI Logic & API calls
