@@ -9,6 +9,7 @@ A full-stack web application to download Facebook videos in high quality (HD/SD)
 * **Audio/Video Merging:** Uses **FFmpeg** on the server to ensure high-quality video is merged with audio (fixing the common "silent video" issue).
 * **No CORS Issues:** Proxies requests through a local backend server.
 * **Clean UI:** Built with Vite and modern CSS.
+* **Youtube Support:** Can downloaded video & short.
 
 ---
 
