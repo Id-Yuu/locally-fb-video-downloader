@@ -89,7 +89,7 @@ app.get('/download', (req, res) => {
         console.log('✅ Merge complete. Sending file to user...');
 
         if (fs.existsSync(filePath)) {
-            res.download(filePath, `facebook_video_${quality || 'best'}.mp4`, (err) => {
+            res.download(filePath, `downloaded_video_${quality || 'best'}.mp4`, (err) => {
                 fs.unlink(filePath, (e) => {
                     if (!e) console.log('🗑️ Temp file deleted.');
                 });
@@ -104,3 +104,4 @@ app.listen(PORT, () => {
     console.log(`✅ Server running on http://localhost:${PORT}`);
     console.log(`📂 Bin folder: ${binPath}`);
 });
+
