@@ -11,7 +11,6 @@ app.use(cors());
 app.use(express.json());
 
 const binPath = path.join(__dirname, 'bin');
-// Detect OS to choose correct binary name
 const ytDlpExe = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
 const ytDlpPath = path.join(binPath, ytDlpExe);
 const tempDir = path.join(__dirname, 'temp');
@@ -20,13 +19,12 @@ if (!fs.existsSync(tempDir)) {
     fs.mkdirSync(tempDir);
 }
 
-// ROUTE 1: GET VIDEO INFO
+// GET VIDEO INFO
 app.get('/info', (req, res) => {
     const videoUrl = req.query.url;
     if (!videoUrl) return res.status(400).json({ error: 'URL required' });
 
     console.log(`🔍 Fetching Info: ${videoUrl}`);
-
     const process = spawn(ytDlpPath, ['-J', videoUrl]);
     let dataBuffer = '';
 
@@ -36,7 +34,6 @@ app.get('/info', (req, res) => {
         if (code !== 0) return res.status(500).json({ error: 'Failed to fetch video info. Is the link public?' });
         try {
             const json = JSON.parse(dataBuffer);
-            
             const formats = json.formats || [];
             const heights = formats
                 .filter(f => f.vcodec !== 'none' && f.height) 
@@ -56,25 +53,24 @@ app.get('/info', (req, res) => {
     });
 });
 
-// ROUTE 2: DOWNLOAD & MERGE
+// DOWNLOAD & MERGE
 app.get('/download', (req, res) => {
-    const { url, quality } = req.query;
+    const { url, quality, title } = req.query;
     if (!url) return res.status(400).send('URL required');
+    console.log(`⬇️ Starting download: ${title} (${quality}p)`);
 
-    console.log(`⬇️ Starting download (${quality}p)...`);
-
-    const filename = `fb_vid_${Date.now()}.mp4`;
-    const filePath = path.join(tempDir, filename);
+    const tempFilename = `temp_${Date.now()}.mp4`;
+    const tempFilePath = path.join(tempDir, tempFilename);
 
     const formatString = quality 
         ? `bestvideo[height=${quality}]+bestaudio/best[height=${quality}]/best` 
         : 'bestvideo+bestaudio/best';
 
     const ytDlp = spawn(ytDlpPath, [
-        '-f', formatString,             // Select quality
-        '--merge-output-format', 'mp4', // Force merge to MP4
-        '-o', filePath,                 // Save to temp folder first
-        '--ffmpeg-location', binPath,   // Point to local ffmpeg
+        '-f', formatString,
+        '--merge-output-format', 'mp4',
+        '-o', tempFilePath,
+        '--ffmpeg-location', binPath,
         url
     ]);
 
@@ -86,11 +82,14 @@ app.get('/download', (req, res) => {
             return res.status(500).send('Download failed on server.');
         }
 
-        console.log('✅ Merge complete. Sending file to user...');
+        console.log('✅ Merge complete. Sending file...');
 
-        if (fs.existsSync(filePath)) {
-            res.download(filePath, `downloaded_video_${quality || 'best'}.mp4`, (err) => {
-                fs.unlink(filePath, (e) => {
+        if (fs.existsSync(tempFilePath)) {
+            const safeTitle = (title || 'facebook_video')
+                .replace(/[<>:"/\\|?*]+/g, '_') 
+                .trim(); 
+            res.download(tempFilePath, `${safeTitle}.mp4`, (err) => {
+                fs.unlink(tempFilePath, (e) => {
                     if (!e) console.log('🗑️ Temp file deleted.');
                 });
             });
@@ -104,4 +103,3 @@ app.listen(PORT, () => {
     console.log(`✅ Server running on http://localhost:${PORT}`);
     console.log(`📂 Bin folder: ${binPath}`);
 });
-
