@@ -21,14 +21,14 @@ Before running this project, you must install the necessary binaries. The applic
 You need to download two executable files and place them in the `server/bin/` folder.
 
 1. **yt-dlp:**
-* Download the latest release from [GitHub Releases](https://github.com/yt-dlp/yt-dlp/releases).
-* *Windows:* Download `yt-dlp.exe`.
-* *Linux/Mac:* Download `yt-dlp` (binary).
+    * Download the latest release from [GitHub Releases](https://github.com/yt-dlp/yt-dlp/releases).
+    * *Windows:* Download `yt-dlp.exe`.
+    * *Linux/Mac:* Download `yt-dlp` (binary).
 
 
 2. **FFmpeg:**
-* Download from the [Official FFmpeg Site](https://ffmpeg.org/download.html).
-* Extract the zip file and find `ffmpeg.exe` (or `ffmpeg` binary) inside the `bin` folder.
+    * Download from the [Official FFmpeg Site](https://ffmpeg.org/download.html).
+    * Extract the zip file and find `ffmpeg.exe` (or `ffmpeg` binary) inside the `bin` folder.
 
 
 
