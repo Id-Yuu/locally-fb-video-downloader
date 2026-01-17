@@ -10,7 +10,9 @@ const videoTitle = document.getElementById('videoTitle');
 const statusText = document.getElementById('statusText');
 
 let currentUrl = '';
+let currentTitle = '';
 
+// FETCH METADATA
 getInfoBtn.addEventListener('click', async () => {
     const url = urlInput.value.trim();
     if (!url) return setStatus('⚠️ Please enter a URL', 'red');
@@ -21,8 +23,6 @@ getInfoBtn.addEventListener('click', async () => {
 
     try {
         const res = await fetch(`/info?url=${encodeURIComponent(url)}`);
-        
-        // Debug check: Ensure response is JSON
         const text = await res.text();
         let data;
         try {
@@ -33,8 +33,8 @@ getInfoBtn.addEventListener('click', async () => {
         }
 
         if (data.error) throw new Error(data.error);
-
-        videoTitle.innerText = data.title.length > 50 ? data.title.substring(0, 50) + '...' : data.title;
+        currentTitle = data.title; 
+        videoTitle.innerText = currentTitle;
         thumb.src = data.thumbnail;
         
         qualitySelect.innerHTML = '';
@@ -63,14 +63,15 @@ getInfoBtn.addEventListener('click', async () => {
     }
 });
 
-
+// DOWNLOAD FILE
 downloadBtn.addEventListener('click', () => {
     const quality = qualitySelect.value;
-    setStatus('⏳ Processing... Please wait.', '#1877f2');
+    
+    setStatus('⏳ Processing on Server... Please wait.', '#1877f2');
     downloadBtn.disabled = true;
-    downloadBtn.innerText = "Processing on Server...";
+    downloadBtn.innerText = "Processing...";
 
-    const downloadUrl = `/download?url=${encodeURIComponent(currentUrl)}&quality=${quality}`;
+    const downloadUrl = `/download?url=${encodeURIComponent(currentUrl)}&quality=${quality}&title=${encodeURIComponent(currentTitle)}`;
     
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
@@ -81,7 +82,6 @@ downloadBtn.addEventListener('click', () => {
         setStatus('✅ Download started! Check your downloads folder.', 'green');
         downloadBtn.disabled = false;
         downloadBtn.innerText = "Download MP4";
-        
         setTimeout(() => document.body.removeChild(iframe), 60000);
     }, 4000);
 });
@@ -91,8 +91,9 @@ backBtn.addEventListener('click', () => {
     step1.classList.remove('hidden');
     setStatus('');
     urlInput.value = '';
+    currentUrl = '';
+    currentTitle = '';
 });
-
 
 function setStatus(msg, color) {
     statusText.innerHTML = msg;
