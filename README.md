@@ -22,14 +22,14 @@ You must have **Node.js** installed. Additionally, this app relies on two extern
 Create a folder named `bin` in the root directory and place these files inside:
 
 1. **yt-dlp:**
-* Download from [GitHub Releases](https://github.com/yt-dlp/yt-dlp/releases).
-* *Windows:* `yt-dlp.exe`
-* *Linux/Mac:* `yt-dlp` (ensure it is executable: `chmod +x yt-dlp`)
+   * Download from [GitHub Releases](https://github.com/yt-dlp/yt-dlp/releases).
+   * *Windows:* `yt-dlp.exe`
+   * *Linux/Mac:* `yt-dlp` (ensure it is executable: `chmod +x yt-dlp`)
 
 
 2. **FFmpeg:**
-* Download from [FFmpeg.org](https://ffmpeg.org/download.html).
-* Extract and find the `ffmpeg` executable (or `ffmpeg.exe` on Windows).
+   * Download from [FFmpeg.org](https://ffmpeg.org/download.html).
+   * Extract and find the `ffmpeg` executable (or `ffmpeg.exe` on Windows).
 
 
 
@@ -38,36 +38,34 @@ Create a folder named `bin` in the root directory and place these files inside:
 ## 🚀 Installation
 
 1. **Clone the Repository**
-```bash
-git clone https://github.com/Id-Yuu/locally-fb-video-downloader.git
-cd locally-fb-video-downloader
-
-```
+   ```bash
+   git clone https://github.com/Id-Yuu/locally-fb-video-downloader.git
+   cd locally-fb-video-downloader
+   ```
 
 
 2. **Install Dependencies**
-This installs libraries for both the server (Express) and client (Vite).
-```bash
-npm install
 
-```
+   This installs libraries for both the server (Express) and client (Vite).
+   ```bash
+   npm install
+   ```
 
 
-3. **Verify Structure**
-Ensure your folder looks like this:
-```text
-locally-fb-video-downloader/
-├── bin/
-│   ├── ffmpeg.exe
-│   └── yt-dlp.exe
-├── src/
-│   └── main.js
-├── index.html
-├── server.js
-└── package.json
+4. **Verify Structure**
 
-```
-
+   Ensure your folder looks like this:
+   ```text
+   locally-fb-video-downloader/
+   ├── bin/
+   │   ├── ffmpeg.exe
+   │   └── yt-dlp.exe
+   ├── src/
+   │   └── main.js
+   ├── index.html
+   ├── server.js
+   └── package.json
+   ```
 
 
 ---
@@ -133,4 +131,5 @@ locally-fb-video-downloader/
 
 
 * This happens if the backend crashes or isn't running. Check your terminal for error logs.
+
 
