@@ -5,7 +5,7 @@ A robust, full-stack web application to download Facebook videos in high quality
 ## ✨ New Features
 
 * **Unified Architecture:** Frontend and Backend live in one folder. No need to run two separate terminals.
-* **🌙 Dark Mode:** Integrated theme toggle with persistent storage (remembers user preference).
+* **Dark Mode:** Integrated theme toggle with persistent storage (remembers user preference).
 * **Smart Filenames:** Downloads files using the original video title (sanitized for OS compatibility).
 * **Audio Merge:** Uses FFmpeg to ensure high-quality video streams have sound.
 * **Single Command Run:** One command to build and start the entire app.
@@ -133,3 +133,4 @@ locally-fb-video-downloader/
 
 
 * This happens if the backend crashes or isn't running. Check your terminal for error logs.
+
