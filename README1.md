@@ -9,6 +9,7 @@ A robust, full-stack web application to download Facebook videos in high quality
 * **Smart Filenames:** Downloads files using the original video title (sanitized for OS compatibility).
 * **Audio Merge:** Uses FFmpeg to ensure high-quality video streams have sound.
 * **Single Command Run:** One command to build and start the entire app.
+* **Youtube Support**: Can downloaded video & short.
 
 ---
 
@@ -129,5 +130,6 @@ locally-fb-video-downloader/
 * Verify `ffmpeg.exe` is in the `bin` folder.
 
 **3. "Server returned HTML" Error**
+
 
 * This happens if the backend crashes or isn't running. Check your terminal for error logs.
