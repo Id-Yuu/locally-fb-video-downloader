@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FB Downloader Pro</title>
+    <style>
+      /* --- THEME VARIABLES --- */
+      :root {
+        --bg-color: #f0f2f5;
+        --card-bg: #ffffff;
+        --text-color: #050505;
+        --subtext-color: #65676b;
+        --border-color: #ccc;
+        --input-bg: #ffffff;
+        --btn-primary: #1877f2;
+        --btn-hover: #166fe5;
+        --btn-secondary: #e4e6eb;
+        --btn-sec-text: #050505;
+        --shadow: rgba(0, 0, 0, 0.1);
+      }
+
+      /* Dark Mode Overrides */
+      .dark-mode {
+        --bg-color: #18191a;
+        --card-bg: #242526;
+        --text-color: #e4e6eb;
+        --subtext-color: #b0b3b8;
+        --border-color: #3e4042;
+        --input-bg: #3a3b3c;
+        --btn-primary: #2d88ff;
+        --btn-hover: #1877f2;
+        --btn-secondary: #3a3b3c;
+        --btn-sec-text: #e4e6eb;
+        --shadow: rgba(0, 0, 0, 0.5);
+      }
+
+      /* --- GLOBAL STYLES --- */
+      body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .card {
+        background-color: var(--card-bg);
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px var(--shadow);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        position: relative;
+      }
+
+      h2 { margin-top: 0; color: var(--btn-primary); }
+
+      /* --- INPUTS & BUTTONS --- */
+      input, select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        background-color: var(--input-bg);
+        color: var(--text-color);
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+      
+      button {
+        background-color: var(--btn-primary);
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.2s;
+      }
+      button:hover { background-color: var(--btn-hover); }
+      button:disabled { background-color: var(--border-color); cursor: not-allowed; }
+
+      button.secondary {
+        background-color: var(--btn-secondary);
+        color: var(--btn-sec-text);
+        margin-top: 10px;
+      }
+
+      /* --- HELPERS --- */
+      .hidden { display: none; }
+      
+      .meta-info img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        background: #333;
+      }
+      
+      .meta-info h3 { 
+        font-size: 1rem; 
+        margin: 0 0 15px 0; 
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        color: var(--text-color);
+      }
+
+      .status { margin-top: 15px; font-size: 0.9rem; color: var(--subtext-color); min-height: 20px; }
+
+      /* --- DARK MODE TOGGLE BTN --- */
+      .theme-toggle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0;
+        width: auto;
+        color: var(--subtext-color);
+      }
+      .theme-toggle:hover { background: none; color: var(--btn-primary); }
+    </style>
+  </head>
+  <body>
+  <button id="themeToggle" class="theme-toggle" title="Toggle Dark Mode">🌙</button>
+    <div class="card">
+      <h2>Video Downloader</h2>
+
+      <div id="step1">
+        <input type="text" id="urlInput" placeholder="Paste Facebook Link..." />
+        <button id="getInfoBtn">Check Video</button>
+      </div>
+
+      <div id="step2" class="hidden">
+        <div class="meta-info">
+            <img id="thumb" />
+            <h3 id="videoTitle"></h3>
+        </div>
+        <select id="qualitySelect"></select>
+        <button id="downloadBtn">Download MP4</button>
+        <button id="backBtn" class="secondary">Cancel</button>
+      </div>
+
+      <div class="status" id="statusText"></div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
